@@ -1,7 +1,7 @@
 import xlrd
 
 workbook = xlrd.open_workbook('test.xls')
+sheet_names = workbook.sheet_names()
 
-worksheet = workbook.sheet_by_index(0)
-
-print(worksheet.cell(1, 0).value)
+print(sheet_names)
+print(len(sheet_names))
