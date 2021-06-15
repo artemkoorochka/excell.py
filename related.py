@@ -1,34 +1,20 @@
-# https://stackoverflow.com/questions/2942889/reading-parsing-excel-xls-files-with-python/50815107
-
 import xlrd
-
-file = 'related_import.xls'
 # /home/bitrix/www/upload/koorochka/excel/
+file = 'related_import.xls'
+
 workbook = xlrd.open_workbook(file)
 sheet_names = workbook.sheet_names()
 worksheet = workbook.sheet_by_index(0)
+current = 0
+json = ''
 
-print(sheet_names)
-print(len(sheet_names))
-
-print("Товар")
-print(worksheet.cell(0,0).value)
-print(worksheet.cell(1,0).value)
-print(worksheet.cell(2,0).value)
-print(worksheet.cell(3,0).value)
-
-print("сопутка")
-
-
-
-print("Cicle")
-
+json += "{"
 for i in range(1,worksheet._dimnrows):
-    print(worksheet.cell(i,1).value)
-
-
-print("Count")
-
-print(worksheet._dimnrows)
-
-
+    if str(worksheet.cell(i,1).value) != '':
+        if str(worksheet.cell(i,0).value) != '':
+            current = worksheet.cell(i,0).value
+        json += "'{}':'{}'".format(current, worksheet.cell(i,1).value)
+        if i < (worksheet._dimnrows - 1):
+            json += ","
+json += "}"
+print(json)
